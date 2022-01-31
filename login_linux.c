@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
 
 	// struct passwd *passwddata; /* this has to be redefined in step 2 */
 	/* see pwent.h */
+	
 	mypwent *passwddata;
 
 	char important1[LENGTH] = "**IMPORTANT 1**";
@@ -97,7 +98,14 @@ int main(int argc, char *argv[]) {
 			printf("Can't find user!\n");
 			printf("Login Incorrect \n");
 		}
+		
 		if (passwddata != NULL) {
+
+			if(passwddata->pwfailed > 2){
+			printf("You've failed to login too many times");
+			sleep(2^(passwddata->pwfailed));
+			}
+
 			/* You have to encrypt user_pass for this to work */
 			/* Don't forget to include the salt */	
 			printf("PW input is : %s\n", user_pass);
@@ -140,6 +148,7 @@ int main(int argc, char *argv[]) {
 				printf("Login Incorrect \n");
 				// add fail_num and write to database
 				passwddata->pwfailed++;
+
 			}
 			sprintf(new_pwent, "%s:%d:%s:%s:%d:%d", passwddata->pwname, passwddata->uid, 
 			passwddata->passwd, passwddata->passwd_salt, passwddata->pwfailed, passwddata->pwage);
