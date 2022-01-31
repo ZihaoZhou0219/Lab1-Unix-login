@@ -101,6 +101,7 @@ int main(int argc, char *argv[]) {
 		
 		if (passwddata != NULL) {
 
+			
 			if(passwddata->pwfailed > 2){
 			printf("You've failed to login too many times");
 			sleep(2^(passwddata->pwfailed));
@@ -141,6 +142,16 @@ int main(int argc, char *argv[]) {
 				passwddata->pwage++;
 				/*  check UID, see setuid(2) */
 				/*  start a shell, use execve(2) */
+
+				char cmd[] = "/bin/sh";
+
+				char *argVec[] = {"ls", NULL};
+				char *envVec[] = {NULL};
+
+				if (execve(cmd, argVec, envVec) == -1){
+					perror("Could not execute execve");
+				}
+			
 
 			}
 			else {
