@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
 					break;
 				}
 			}
-			if (!strcmp(user_pass, passwddata->passwd)) {
+			if (!strcmp(crypt(user_pass,passwddata->passwd_salt), passwddata->passwd)) {
 
 				printf(" You're in !\n");
 				passwddata->pwage++;
