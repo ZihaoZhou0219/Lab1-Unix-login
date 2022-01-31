@@ -31,6 +31,13 @@ void sighandler() {
 
 	/* add signalhandling routines here */
 	/* see 'man 2 signal' */
+	//https://en.wikipedia.org/wiki/Signal_(IPC)
+	//ctrl-C:terminate	
+	signal(SIGINT, SIG_IGN);
+	//ctrl-Z:suspend
+	signal(SIGTSTP, SIG_IGN);
+	//ctrl-\:terminate and dump core
+	signal(SIGQUIT, SIG_IGN);
 }
 
 
