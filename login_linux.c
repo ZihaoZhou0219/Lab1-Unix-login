@@ -190,6 +190,7 @@ int main(int argc, char *argv[]) {
 				printf("Login Incorrect \n");
 				// wrong password and increase fail_num
 				passwddata->pwfailed++;
+
 			}
 			sprintf(new_pwent, "%s:%d:%s:%s:%d:%d", passwddata->pwname, passwddata->uid, 
 			passwddata->passwd, passwddata->passwd_salt, passwddata->pwfailed, passwddata->pwage);
