@@ -28,19 +28,15 @@ mypwent *mygetpwnam(char *name) {
 	static mypwent ent = { pwname, 0, passwd, passwd_salt, 0, 0 };
 
 	/* Open file, return NULL if it failed. */
-	// if ((file = fopen(MYPWENT_FILENAME, "rb")) == NULL){
-	// 	return NULL;
-	// }
-	if ((file = fopen(MYPWENT_FILENAME, "r")) == NULL){
+	if ((file = fopen(MYPWENT_FILENAME, "rb")) == NULL){
 		return NULL;
 	}
+
 	/* Read each line, looking for the right entry. */
 	while (fgets(buffer, sizeof(buffer), file) != NULL) {
 		if (sscanf(buffer, "%[^:]:%d:%[^:]:%[^:]:%d:%d", ent.pwname, &ent.uid,
 				ent.passwd, ent.passwd_salt, &ent.pwfailed, &ent.pwage) != 6)
 			break;
-		printf("The username is : %s\n", name);
-		printf("The record name is: %s\n", pwname);
 		if (strcmp(pwname, name) == 0) {
 			fclose(file);
 			return &ent;
