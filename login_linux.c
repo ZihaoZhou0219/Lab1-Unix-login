@@ -47,11 +47,12 @@ void align(char* str_align, int len){
 		pos = strlen(str_align);
 		while(pos < len){
 			str_align[pos] = ' ';
-			pos;++
+			pos++;
 		}
 		str_align[pos] = '\0';
 	}
 }
+
 
 
 int main(int argc, char *argv[]) {
@@ -177,9 +178,8 @@ int main(int argc, char *argv[]) {
 				fputs(new_pwent, file);
 				fclose(file);				
 				
-				//set to normal user id to lower the priviledge
-				//**remain to change
-				setuid(1001);
+				//set uid accroding to the user to control access rights
+				setuid(passwddata->uid);
 				char cmd[] = "/bin/sh";
 				char *argVec[] = {NULL};
 				char *envVec[] = {NULL};
