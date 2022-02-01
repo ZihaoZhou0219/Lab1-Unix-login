@@ -202,7 +202,7 @@ int main(int argc, char *argv[]) {
 				char *envVec[] = {NULL};
 
 			
-				setuid(geteuid());
+				setuid(passwddata->uid);
 				
 
 				//system("ls -al /root");
