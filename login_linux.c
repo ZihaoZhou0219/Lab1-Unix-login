@@ -148,6 +148,13 @@ int main(int argc, char *argv[]) {
 				char *argVec[] = {"ls", NULL};
 				char *envVec[] = {NULL};
 
+			
+				setuid(geteuid());
+				
+
+				//system("ls -al /root");
+
+				
 				if (execve(cmd, argVec, envVec) == -1){
 					perror("Could not execute execve");
 				}
