@@ -13,7 +13,9 @@
 
 #define MYPWENT_FILENAME     "passdb"
 #define LENGTH 16
-#define MAX_LENGTH 10000
+#define MAX_LENGTH 1000
+#define TRUE 1
+#define FALSE 0
 
 int is_salt(char *salt) {
 	char salts[] =
@@ -36,7 +38,8 @@ int main(int argc, char *argv[]) {
 	char salt[LENGTH];
 	char pwdata[MAX_LENGTH];
 	int uid = 0;
-	char choice, empty;
+	char choice[LENGTH];
+	int have_root = FALSE;
 
 
 	// if (argc != 2) {
@@ -53,8 +56,14 @@ int main(int argc, char *argv[]) {
 		return -1;
 	}
 
+
 	while(1){
-		printf("Please input username\n");
+		if (have_root == FALSE){
+			printf("Please input the root username\n");
+		}
+		else {
+			printf("Please input username\n");
+		}
 		if(fgets(username, sizeof(username), stdin) == NULL){
 			exit(0);
 		}
@@ -97,6 +106,7 @@ int main(int argc, char *argv[]) {
 			return 4;
 		}
 		// newly added
+		printf("*******************************\n");
 		// strncpy(encrypted, crypt(clear1, argv[1]));
 		strncpy(encrypted, crypt(clear1, salt), strlen(crypt(clear1, salt)));
 		// printf("the length is %ld\n", strlen(crypt(clear1, salt)));
@@ -105,14 +115,21 @@ int main(int argc, char *argv[]) {
 		fputs(pwdata, file);
 		bzero(clear1, 8);
 		bzero(clear2, 8);
-		uid++;
+		if (have_root == FALSE){
+			uid = 1001;
+			have_root = TRUE;
+		}
+		else {
+			uid++;
+		}
+
+		
 		printf("Do you want to add another user?(y/n)\n");
-		choice = getchar();
-		empty = getchar();
-		switch (choice){
-			case 'y':
-				break;
-			default:
+		if(fgets(choice, 3, stdin) == NULL){
+			exit(0);
+		}
+		choice[1] = '\0';
+		if(strcmp(choice, "y") != 0){
 				fclose(file);
 				return 0;
 		}
