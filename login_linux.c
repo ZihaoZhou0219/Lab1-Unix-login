@@ -22,8 +22,8 @@
 //newly added
 #define LINE_BUFFER_LENGTH  1000
 #define MAX_CACHE 100
-#define FAIL_LIMIT 5
-#define PASSWORD_ALERT 10
+#define FAIL_LIMIT 3
+#define PASSWORD_ALERT 5
 
 // typedef struct {
 // 	char *name;
@@ -118,23 +118,17 @@ int main(int argc, char *argv[]) {
 
 		if (passwddata != NULL) {
 
-<<<<<<< HEAD
 			// prevent repeated online password guessing
 			if (passwddata->pwfailed >= FAIL_LIMIT){
 				printf("You've failed to login too many times\n");
 				sleep(2 + pow(2,passwddata->pwfailed - FAIL_LIMIT));
-=======
-			
-			if(passwddata->pwfailed > 2){
-			printf("You've failed to login too many times");
-			sleep(2^(passwddata->pwfailed));
->>>>>>> 2033fc3 (added the final step)
 			}
 
 			// have successfully log in over certain times, alert user change password
 			if (passwddata->pwage >= PASSWORD_ALERT){
+				printf("\n**********************************************\n");
 				printf("It's better to change the password\n");
-				// printf("Do you want to change the password?(y/n)\n");
+				printf("\n**********************************************\n");
 				//to do
 
 			}
@@ -177,7 +171,6 @@ int main(int argc, char *argv[]) {
 				printf(" You're in !\n");
 				//increase password age & reset fail_num
 				passwddata->pwage++;
-<<<<<<< HEAD
 				passwddata->pwfailed = 0;
 				//
 				sprintf(new_pwent, "%s:%d:%s:%s:%d:%d", passwddata->pwname, passwddata->uid, 
@@ -192,28 +185,6 @@ int main(int argc, char *argv[]) {
 				char *argVec[] = {NULL};
 				char *envVec[] = {NULL};
 				execve(cmd, argVec, envVec);
-=======
-				/*  check UID, see setuid(2) */
-				/*  start a shell, use execve(2) */
-
-				char cmd[] = "/bin/sh";
-
-				char *argVec[] = {"ls", NULL};
-				char *envVec[] = {NULL};
-
-			
-				setuid(passwddata->uid);
-				
-
-				//system("ls -al /root");
-
-				
-				if (execve(cmd, argVec, envVec) == -1){
-					perror("Could not execute execve");
-				}
-			
-
->>>>>>> 2033fc3 (added the final step)
 			}
 			else {
 				printf("Wrong Password \n");
