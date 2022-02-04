@@ -57,6 +57,8 @@ void align(char* str_align, int len){
 
 int main(int argc, char *argv[]) {
 
+	
+
 	mypwent *passwddata;
 
 	char important1[LENGTH] = "**IMPORTANT 1**";
@@ -177,10 +179,17 @@ int main(int argc, char *argv[]) {
 				passwddata->passwd, passwddata->passwd_salt, passwddata->pwfailed, passwddata->pwage);
 				//write back to file
 				fputs(new_pwent, file);
-				fclose(file);				
+				fclose(file);	
+
+				
 				
 				//set uid accroding to the user to control access rights
-				setuid(passwddata->uid);
+				if(setuid(passwddata->uid) == -1){
+					perror("could not setuid");
+					return -1;
+				}
+
+				//setuid(passwddata->uid);
 				char cmd[] = "/bin/sh";
 				char *argVec[] = {NULL};
 				char *envVec[] = {NULL};
